@@ -40,6 +40,13 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        permissions = [
+            ("canaddbook", "Can add a book"),
+            ("canchangebook", "Can change book details"),
+            ("candeletebook", "Can delete a book"),
+        ]
+
 class Library(models.Model):
     name = models.CharField(max_length=100)
     books = models.ManyToManyField(Book, related_name='libraries')
