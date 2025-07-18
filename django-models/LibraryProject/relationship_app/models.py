@@ -41,11 +41,11 @@ class Book(models.Model):
         return self.title
 
     class Meta:
-        permissions = [
-            ("canaddbook", "Can add a book"),
-            ("canchangebook", "Can change book details"),
-            ("candeletebook", "Can delete a book"),
-        ]
+        permissions = (
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book")
+        )
 
 class Library(models.Model):
     name = models.CharField(max_length=100)
