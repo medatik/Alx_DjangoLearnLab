@@ -3,13 +3,35 @@ from rest_framework import generics, permissions
 from .models import Book
 from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework import generics, filters
+from django_filters.rest_framework import DjangoFilterBackend
+from .models import Book
+from .serializers import BookSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 # Accessible sans authentification
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    # 👇 Activation du filtrage, de la recherche, et de l'ordonnancement
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+
+    # 👇 Champs filtrables : par titre, année et id d'auteur
+    filterset_fields = ['title', 'publication_year', 'author']
+
+    # 👇 Recherche texte dans ces champs (en LIKE)
+    search_fields = ['title', 'author__name']
+
+    # 👇 Champs autorisés pour l'ordonnancement
+    ordering_fields = ['title', 'publication_year']
+    ordering = ['title']  # ordre par défaut
 
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
@@ -47,4 +69,16 @@ Permissions:
 
 Validation:
 - BookSerializer prevents setting a publication_year in the future.
+"""
+"""
+BookListView:
+- Supports filtering on 'title', 'publication_year', and 'author'.
+- Supports full-text search on 'title' and 'author name'.
+- Supports ordering on 'title' and 'publication_year'.
+
+Example queries:
+- /api/books/?title=Harry
+- /api/books/?search=Rowling
+- /api/books/?ordering=publication_year
+- /api/books/?search=Potter&ordering=-title
 """

@@ -11,3 +11,18 @@
 ### Notes:
 - `publication_year` must not be in the future.
 - Authenticated endpoints require session or token authentication.
+
+
+## 📚 Book API — Filtering, Searching, and Ordering
+
+### ✅ Filtering
+- Filter by title: `/api/books/?title=Harry`
+- Filter by author id: `/api/books/?author=3`
+- Filter by year: `/api/books/?publication_year=1997`
+
+### 🔍 Searching
+- Search by title or author name: `/api/books/?search=Potter`
+
+### 🔃 Ordering
+- Order by title: `/api/books/?ordering=title`
+- Descending order: `/api/books/?ordering=-publication_year`
