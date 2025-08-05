@@ -26,3 +26,18 @@
 ### 🔃 Ordering
 - Order by title: `/api/books/?ordering=title`
 - Descending order: `/api/books/?ordering=-publication_year`
+
+# ✅ API Test Suite for Book Endpoints
+
+### 🔬 What is tested?
+
+- Book CRUD: create, read, update, delete
+- Filtering by title, year, and author
+- Searching by title or author
+- Ordering results
+- Permission controls: authenticated and anonymous access
+
+### ▶️ How to run
+
+```bash
+python manage.py test api
